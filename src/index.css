@@ -1,0 +1,682 @@
+@import 'tailwindcss';
+
+/*
+ * Tokens visuais. As cores principais podem ser trocadas em
+ * src/data/siteData.js (theme) sem editar este arquivo.
+ * Conceito: fotografia grande, preto e grafite, linhas técnicas finas como
+ * em um desenho de engenharia automotiva, um único acento de cor.
+ */
+@theme {
+  --font-sans: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  --color-ink: #000000;
+  --color-carbon: #0c0d0f;
+  --color-graphite: #15171a;
+  --color-graphite-2: #1d2024;
+  --color-line: #2a2e34;
+  --color-steel: #8d959e;
+  --color-mist: #bcc3cb;
+  --color-ice: #edf0f3;
+  --color-accent: #a3141c;
+  --color-accent-bright: #d42a33;
+  --color-whatsapp: #25d366;
+  --color-danger: #ff8a8f;
+
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ------------------------------------------------------------------ base */
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    position: relative;
+    background: var(--color-ink);
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-ice);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 75%, transparent);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-bright);
+    outline-offset: 3px;
+  }
+
+  select option {
+    background: var(--color-graphite);
+    color: var(--color-ice);
+  }
+}
+
+/* ------------------------------------------------------------ componentes */
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 82rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .container-x {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container-x {
+      padding-inline: 3rem;
+    }
+  }
+
+  .section-y {
+    padding-block: 6rem;
+  }
+  @media (min-width: 768px) {
+    .section-y {
+      padding-block: 8rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .section-y {
+      padding-block: 10rem;
+    }
+  }
+
+  /* Tipografia: uma única família (Archivo) com larguras diferentes. */
+  .t-display {
+    font-stretch: 116%;
+    font-weight: 760;
+    font-size: clamp(2.2rem, 1rem + 5vw, 5.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.028em;
+    text-wrap: balance;
+  }
+  .t-h2 {
+    font-stretch: 112%;
+    font-weight: 720;
+    font-size: clamp(1.9rem, 1.15rem + 2.9vw, 3.5rem);
+    line-height: 1.03;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+  }
+  .t-h3 {
+    font-stretch: 108%;
+    font-weight: 650;
+    font-size: 1.1875rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .t-lead {
+    font-size: clamp(1.05rem, 0.98rem + 0.3vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--color-mist);
+    max-width: 60ch;
+  }
+  .t-small {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+  }
+  .t-num {
+    font-variant-numeric: tabular-nums;
+    font-stretch: 110%;
+  }
+
+  /* Linha de cota (traço técnico com marcas nas pontas) */
+  .dim-rule {
+    position: relative;
+    display: block;
+    width: 5.5rem;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      var(--color-accent-bright),
+      color-mix(in oklab, var(--color-ice) 40%, transparent)
+    );
+    transform-origin: left center;
+  }
+  .dim-rule::before,
+  .dim-rule::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    width: 1px;
+    height: 9px;
+  }
+  .dim-rule::before {
+    left: 0;
+    background: var(--color-accent-bright);
+  }
+  .dim-rule::after {
+    right: 0;
+    background: color-mix(in oklab, var(--color-ice) 45%, transparent);
+  }
+
+  /* Botões */
+  .btn {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3.25rem;
+    padding: 0 1.5rem;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    font-stretch: 106%;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      background-color 0.35s var(--ease-premium),
+      border-color 0.35s var(--ease-premium),
+      color 0.35s var(--ease-premium),
+      box-shadow 0.35s var(--ease-premium);
+  }
+  .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.22) 50%, transparent 70%);
+    transform: translateX(-120%);
+    pointer-events: none;
+  }
+  @media (hover: hover) {
+    .btn:hover::after {
+      transform: translateX(120%);
+      transition: transform 0.75s var(--ease-premium);
+    }
+  }
+  .btn svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex-shrink: 0;
+  }
+  .btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.18),
+      0 12px 32px -14px color-mix(in oklab, var(--color-accent) 80%, transparent);
+  }
+  @media (hover: hover) {
+    .btn-primary:hover {
+      background: var(--color-accent-bright);
+    }
+  }
+  .btn-ghost {
+    background: rgb(255 255 255 / 0.04);
+    border-color: rgb(255 255 255 / 0.18);
+    color: var(--color-ice);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  @media (hover: hover) {
+    .btn-ghost:hover {
+      background: rgb(255 255 255 / 0.09);
+      border-color: rgb(255 255 255 / 0.4);
+    }
+  }
+  .btn-light {
+    background: var(--color-ice);
+    color: #0b0c0e;
+  }
+  @media (hover: hover) {
+    .btn-light:hover {
+      background: #fff;
+    }
+  }
+  .btn-sm {
+    min-height: 2.75rem;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+  }
+  .btn-lg {
+    min-height: 3.5rem;
+    padding: 0 1.85rem;
+    font-size: 1rem;
+  }
+  .btn-block {
+    width: 100%;
+  }
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  /* Links do menu */
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    padding-block: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-mist);
+    transition: color 0.3s var(--ease-premium);
+  }
+  .nav-link:hover,
+  .nav-link[aria-current='true'] {
+    color: var(--color-ice);
+  }
+
+  /* Campos de formulário */
+  .field-label {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-mist);
+  }
+  .field-input {
+    width: 100%;
+    min-height: 3.1rem;
+    padding: 0.75rem 0.95rem;
+    border-radius: 3px;
+    border: 1px solid var(--color-line);
+    background: rgb(0 0 0 / 0.45);
+    color: var(--color-ice);
+    font-size: 1rem;
+    line-height: 1.4;
+    transition:
+      border-color 0.25s var(--ease-premium),
+      box-shadow 0.25s var(--ease-premium),
+      background-color 0.25s var(--ease-premium);
+  }
+  .field-input::placeholder {
+    color: #6c737c;
+  }
+  @media (hover: hover) {
+    .field-input:hover {
+      border-color: #3b4047;
+    }
+  }
+  .field-input:focus {
+    outline: none;
+    border-color: var(--color-accent-bright);
+    background: rgb(0 0 0 / 0.65);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-accent) 30%, transparent);
+  }
+  .field-input[aria-invalid='true'] {
+    border-color: var(--color-danger);
+  }
+  .field-error {
+    margin-top: 0.4rem;
+    font-size: 0.8125rem;
+    color: var(--color-danger);
+  }
+  textarea.field-input {
+    min-height: 7.5rem;
+    resize: vertical;
+  }
+
+  /* Seletores dos filtros */
+  .filter-select {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.7rem 2.5rem 0.7rem 0.9rem;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    border: 1px solid var(--color-line);
+    background: var(--color-graphite);
+    color: var(--color-ice);
+    font-size: 0.9375rem;
+    cursor: pointer;
+    transition: border-color 0.25s var(--ease-premium);
+  }
+  @media (hover: hover) {
+    .filter-select:hover {
+      border-color: #3b4047;
+    }
+  }
+  .filter-select:focus-visible {
+    outline: none;
+    border-color: var(--color-accent-bright);
+  }
+
+  /* Controle deslizante (entrada da simulação) */
+  .range {
+    --fill: 50%;
+    width: 100%;
+    height: 1.75rem;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    cursor: pointer;
+  }
+  .range::-webkit-slider-runnable-track {
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--color-accent-bright) var(--fill), var(--color-line) var(--fill));
+  }
+  .range::-moz-range-track {
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--color-accent-bright) var(--fill), var(--color-line) var(--fill));
+  }
+  .range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    margin-top: -9px;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background: var(--color-ice);
+    border: 5px solid var(--color-accent);
+    box-shadow: 0 0 0 4px rgb(0 0 0 / 0.5);
+    transition: transform 0.2s var(--ease-premium);
+  }
+  .range::-moz-range-thumb {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--color-ice);
+    border: 5px solid var(--color-accent);
+  }
+  .range:active::-webkit-slider-thumb {
+    transform: scale(1.15);
+  }
+  .range:focus-visible {
+    outline-offset: 6px;
+  }
+
+  /* ------------------------------------------------------ card de veículo */
+  .vcard {
+    --lift: 4rem;
+  }
+  .vcard-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 6px;
+    border: 1px solid rgb(255 255 255 / 0.07);
+    background: linear-gradient(180deg, #181a1e 0%, var(--color-graphite) 100%);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.06),
+      0 24px 48px -32px rgb(0 0 0 / 0.9);
+    transition:
+      transform 0.6s var(--ease-premium),
+      box-shadow 0.6s var(--ease-premium),
+      border-color 0.6s var(--ease-premium);
+  }
+  .vcard-media {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--color-graphite);
+  }
+  .smart-img {
+    transition:
+      opacity 0.7s ease,
+      transform 1.1s var(--ease-premium);
+  }
+  .vcard-media img {
+    transform: scale(1.001);
+  }
+  .vcard-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(0 0 0 / 0.25) 0%, transparent 30%, transparent 55%, rgb(0 0 0 / 0.35) 100%);
+    pointer-events: none;
+  }
+  .vcard-sheen {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(
+      112deg,
+      transparent 32%,
+      rgb(255 255 255 / 0.13) 46%,
+      rgb(255 255 255 / 0.04) 52%,
+      transparent 62%
+    );
+    transform: translateX(-115%);
+  }
+  .vcard-body {
+    position: relative;
+    z-index: 2;
+    margin-top: calc(var(--lift-max, 4rem) * -1);
+    padding: 1.4rem 1.25rem 0;
+    background: linear-gradient(180deg, transparent 0, var(--color-graphite) 3rem);
+    transform: translateY(var(--lift));
+    transition: transform 0.65s var(--ease-premium);
+  }
+  .vcard-info {
+    padding-bottom: 1.25rem;
+  }
+  .vcard-actions {
+    height: 4rem;
+    padding-bottom: 1.25rem;
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition:
+      opacity 0.45s var(--ease-premium),
+      transform 0.55s var(--ease-premium);
+  }
+  .vcard-tag {
+    position: absolute;
+    left: 0.9rem;
+    top: 0.9rem;
+    z-index: 2;
+    padding: 0.3rem 0.6rem;
+    border-radius: 2px;
+    background: rgb(0 0 0 / 0.6);
+    border: 1px solid rgb(255 255 255 / 0.14);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-ice);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  /* Estado ativo: mouse por cima, foco do teclado ou toque/rolagem no celular */
+  .vcard[data-active='true'] .vcard-inner,
+  .vcard:focus-within .vcard-inner {
+    transform: translateY(-4px);
+    border-color: rgb(255 255 255 / 0.14);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.1),
+      0 40px 70px -34px rgb(0 0 0 / 1),
+      0 0 0 1px color-mix(in oklab, var(--color-accent) 18%, transparent);
+  }
+  .vcard[data-active='true'] .vcard-media img {
+    transform: scale(1.06);
+  }
+  .vcard[data-active='true'] .vcard-sheen {
+    transform: translateX(115%);
+    transition: transform 1.15s var(--ease-premium);
+  }
+  .vcard[data-active='true'],
+  .vcard[data-revealed='true'],
+  .vcard:focus-within {
+    --lift: 0rem;
+  }
+  .vcard[data-active='true'] .vcard-actions,
+  .vcard[data-revealed='true'] .vcard-actions,
+  .vcard:focus-within .vcard-actions {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.08s;
+  }
+
+  /* Imagem carregando */
+  .img-shimmer {
+    background:
+      linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 0.05) 50%, transparent 70%), var(--color-graphite);
+    background-size: 220% 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+
+  /* Indicador de rolagem */
+  .scroll-track {
+    position: relative;
+    width: 1px;
+    height: 3rem;
+    overflow: hidden;
+    background: rgb(255 255 255 / 0.2);
+  }
+  .scroll-track::after {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 0;
+    width: 3px;
+    height: 0.9rem;
+    border-radius: 2px;
+    background: var(--color-ice);
+    animation: scroll-dot 2.2s var(--ease-premium) infinite;
+  }
+
+  /* Anel do botão flutuante do WhatsApp */
+  .wa-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    border: 1px solid color-mix(in oklab, var(--color-whatsapp) 70%, transparent);
+    animation: wa-pulse 3.4s ease-out infinite;
+    pointer-events: none;
+  }
+
+  /* Rolagem horizontal sem barra visível (depoimentos no celular) */
+  .snap-row {
+    scrollbar-width: none;
+  }
+  .snap-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Link para pular ao conteúdo (acessibilidade) */
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 200;
+    padding: 0.75rem 1rem;
+    border-radius: 3px;
+    background: var(--color-ice);
+    color: #000;
+    font-weight: 600;
+    transform: translateY(-200%);
+    transition: transform 0.2s;
+  }
+  .skip-link:focus {
+    transform: none;
+  }
+
+  /* Introdução */
+  .intro-beam {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 42vw;
+    height: 2px;
+    margin-top: -1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(237 240 243 / 0.05) 25%,
+      rgb(237 240 243 / 0.9) 88%,
+      #fff 100%
+    );
+    box-shadow:
+      0 0 14px 1px rgb(255 255 255 / 0.5),
+      0 0 46px 6px color-mix(in oklab, var(--color-accent) 45%, transparent);
+    border-radius: 2px;
+  }
+  .lamp-glow {
+    position: absolute;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+}
+
+/* ------------------------------------------------------------ animações */
+@keyframes shimmer {
+  from {
+    background-position: 160% 0;
+  }
+  to {
+    background-position: -60% 0;
+  }
+}
+
+@keyframes scroll-dot {
+  0% {
+    transform: translateY(-1rem);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(3rem);
+    opacity: 0;
+  }
+}
+
+@keyframes wa-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+/* Respeita a preferência "reduzir movimento" do aparelho */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
+  }
+  .vcard {
+    --lift: 0rem;
+  }
+  .vcard .vcard-actions {
+    opacity: 1;
+    transform: none;
+  }
+}
